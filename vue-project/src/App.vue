@@ -52,6 +52,9 @@
             <button  class="btn btn-primary" @click="addNew()">
                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
             </button>
+             <a class="btn btn-light m-2" href="https://github.com/mensenvau/vuejs_ch" target="_blank" >
+                 <i class="fa fa-github" aria-hidden="true"></i>
+            </a>
            <div class="row col-12 mt-2" v-for="(item,index) in all">
           
               <div class="form-group col-sm-3"> 
@@ -81,13 +84,11 @@
               </div>
               
           </div>
-          
-           <code class="row" style="margin-top: 100px;" >
-              {{all}}
-           </code>
 
-
-          
+          <div class="row mt-5">
+              <code>{{all}}</code>
+          </div>
+           
     </div>
      
 </template>
