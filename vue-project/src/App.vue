@@ -17,6 +17,15 @@
                 vils.value = await data.json()   
           })
        }
+
+       let removeSet = (index,data)=>{ 
+           let st =  new Object();  
+           for(let item of all.value){ 
+              if(all.value[index].tuman!=item.tuman) st[item.tuman] = 1
+           } 
+           const result = data.filter(el => st[el.id]!=1 );  
+           return result;  
+       }
       
        let getTuman = (index)=>{
            fetch('https://robocontest.uz/api/regions?q='+all.value[index].vil, {
@@ -25,24 +34,23 @@
               'Content-Type': 'application/json; charset=utf-8' 
              }}
              ).then(async(data,status)=>{
-                all.value[index].tlist = await data.json();
-                all.value[index].tuman = all.value[index].tlist[0].id || 0
+                all.value[index].tlist = removeSet(index,await data.json()); 
           })
-      }
+       }
   
-      let addNew = ()=>{
-           all.value.push({ vil: 0 , tuman: 0 , comment: "" , tlist: [] })
-      }
+        let addNew = ()=>{
+            all.value.push({ vil: 0 , tuman: 0 , comment: "" , tlist: [] })
+        }
 
-       let removeOld = (index)=>{
-          all.value.pop(index)
-      }
+        let removeOld = (index)=>{
+            all.value.pop(index)
+        }
 
-      let updateTList = (index) =>{
-          getTuman(index)
-      }
+        let updateTList = (index) =>{
+            getTuman(index)
+        }
 
-      getVils()
+        getVils()
       
 </script>
 
@@ -66,7 +74,7 @@
 
               <div class="form-group col-sm-3"> 
                 <label for="">Tuman</label>
-                <select class="form-control"  v-model="item.tuman"  :disabled="item.tlist.length==0">
+                <select class="form-control"  v-model="item.tuman"  :disabled="item.tlist.length==0"  @click="updateTList(index)">
                      <option v-for="tuman in item.tlist" :value="tuman.id">{{tuman.name}}</option> 
                 </select>
               </div>
